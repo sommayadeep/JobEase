@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-const API = "http://localhost:5001";
+const API = import.meta.env.VITE_API_URL;
 import axios from 'axios'
 import { FaMapMarkerAlt, FaUsers, FaCalendarAlt, FaRegSmileBeam } from 'react-icons/fa'
 
@@ -169,7 +169,7 @@ function App() {
     try {
       setLoading(true)
       const response = await axios.get(`${API}/api/jobs`)
-      console.log('GET /api/jobs response:', response.data)
+      console.log('GET jobs response:', response.data)
       setJobs(response.data.jobs)
       setError(null)
     } catch (err) {
@@ -187,7 +187,7 @@ function App() {
   const handleAddJob = async (formData) => {
     try {
       const response = await axios.post(`${API}/api/jobs`, formData)
-      console.log('POST /api/jobs response:', response.data)
+      console.log('POST jobs response:', response.data)
       fetchJobs() // Refresh
       setMessage('Job added successfully!')
       setJobToEdit(null)
@@ -199,7 +199,7 @@ function App() {
   const handleUpdateJob = async (formData) => {
     try {
       const response = await axios.put(`${API}/api/jobs/${jobToEdit._id}`, formData)
-      console.log('PUT /api/jobs response:', response.data)
+      console.log('PUT jobs response:', response.data)
       setMessage('Job updated successfully!')
       setJobToEdit(null)
       fetchJobs()
@@ -212,7 +212,7 @@ function App() {
     if (!confirm('Are you sure you want to delete this job?')) return
     try {
       const response = await axios.delete(`${API}/api/jobs/${id}`)
-      console.log('DELETE /api/jobs response:', response.data)
+      console.log('DELETE jobs response:', response.data)
       fetchJobs()
       setMessage('Job deleted successfully!')
     } catch (err) {
